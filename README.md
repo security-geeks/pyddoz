@@ -14,7 +14,7 @@ $ python3 pyddoz.py
 ```
 
 ## Usage
-PyDDoZ provides an interactive shell for users. Argument parsing is in TODO list.
+PyDDoZ provides an interactive shell for users. *Argument parsing is in TODO list.*
 
 - You can enter multiple URLs with a blank space. It will request randomly one of them for every request. <br>
 Example: https://google.com https://twitter.com https://yahoo.com
@@ -28,7 +28,7 @@ For instance, `username=admin&password=hello` will be sent as `username=[RANDOMS
 
 **RANDOMSTR** could be any random string that was generated at backstage. You can determine maximum length of the random generated string.
 
-### Other Features
+### Features
 - Activation of bots: In addition to standard requests, they will also hit and crawl the target URL.
 - Timeout: Maximum waiting time request to be responded. *Recommended value is higher than 5.*
 - Threads: Number of threads to involve the attack. *Large number of threads could lead connection and system errors!*
