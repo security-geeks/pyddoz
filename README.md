@@ -24,7 +24,7 @@ Or give just one URL.
 - Select one of the request method. POST and PUT require data to post! <br>
 After selecting POST or PUT, you can randomize the data for every request! <br> 
 
-For instance, `username=admin&password=hello` will be sent as `username=[RANDOMSTR]&query=[RANDOMSTR]` <br>
+For instance, `username=admin&query=hello` will be sent as `username=[RANDOMSTR]&query=[RANDOMSTR]` <br>
 
 **RANDOMSTR** could be any random string that was generated at backstage. You can determine maximum length of the random generated string.
 
