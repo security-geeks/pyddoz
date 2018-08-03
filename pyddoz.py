@@ -180,7 +180,7 @@ if __name__ == '__main__':
         only_bots = str(input(Fore.RED + 'Only bots? [Y/N]: ')[0].lower())
         if (only_bots == 'y'):
             logging.warning('Only bots are included!') 
-        else 
+        else:
             pass
 
     selected_to = float(input(Fore.GREEN + 'Enter timeout second for requests: '))
