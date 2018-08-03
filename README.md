@@ -37,6 +37,8 @@ For instance, `username=admin&password=hello` will be sent as `username=[RANDOMS
 - Proxy: After selecting this option, fresh and live proxies will be fetched and used randomly! No need to enter proxies manually.
 - Allowing redirections: If target responds with 302 or 301 code, you may allow redirections, but most of the time not required.
 
-[![saythanks](https://img.shields.io/badge/say-thanks-ff69b4.svg)](https://www.linkedin.com/in/orçunözdemir/) 
+[![Say thanks.](https://img.shields.io/badge/say-thanks-ff69b4.svg)](https://www.linkedin.com/in/orçunözdemir/)
+
+**For educational purposes only.**
 
 
