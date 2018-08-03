@@ -14,7 +14,7 @@ $ python3 pyddoz.py
 ```
 
 ## Usage
-PyDDoZ provides an interactive shell for users.
+PyDDoZ provides an interactive shell for users. Argument parsing is in TODO list.
 
 - You can enter multiple URLs with a blank space. It will request randomly one of them for every request. <br>
 Example: https://google.com https://twitter.com https://yahoo.com
