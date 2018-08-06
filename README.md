@@ -1,6 +1,6 @@
 [![Made with Python](http://ForTheBadge.com/images/badges/made-with-python.svg)](https://www.python.org/) [![Winter is coming!](http://ForTheBadge.com/images/badges/winter-is-coming.svg)](https://github.com/n1rv4n4/pyddoz/)
 
-# PyDDoZ [![PyDDoZ](https://img.shields.io/badge/PyDDoZ-1.0.0%20beta-red.svg)](https://github.com/n1rv4n4/pyddoz/) [![GPLv3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0.en.html)
+# PyDDoZ [![PyDDoZ](https://img.shields.io/badge/PyDDoZ-1.0.1%20beta-red.svg)](https://github.com/n1rv4n4/pyddoz/) [![GPLv3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0.en.html)
 PyDDoZ is a powerful, human-friendly DDoS tool using application layer (L7) attack techniques. It has nice logging, proxifying, automated bots requests, randomizing data, multiple HTTP request methods, and many other features! Apply load/stress tests to your web application in various ways easily. Written in Python.
 
 ## Prerequisites
