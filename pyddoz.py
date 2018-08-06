@@ -33,6 +33,7 @@ def send_request():
     try:
         global num_success
         global num_failed
+        global payload
 
         url = random.choice(urls)
 
