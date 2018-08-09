@@ -14,6 +14,7 @@ import urllib3
 from colorama import Fore, Back
 from fake_useragent import UserAgent
 from time import sleep
+from logging.handlers import RotatingFileHandler
 
 
 def show_banner():
@@ -166,6 +167,9 @@ if __name__ == '__main__':
         datefmt='%m/%d/%Y %I:%M:%S %p',
         filemode='w',
         level=logging.DEBUG)
+    log = logging.getLogger()
+    handler = RotatingFileHandler('pyddoz.log', maxBytes=10*1024*1024, backupCount=3)
+    log.addHandler(handler)
     show_banner()
 
     logging.info('Program started!')
