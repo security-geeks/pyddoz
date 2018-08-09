@@ -164,6 +164,7 @@ if __name__ == '__main__':
         filename='pyddoz.log',
         format='%(asctime)s | %(levelname)s | %(message)s',
         datefmt='%m/%d/%Y %I:%M:%S %p',
+        filemode='w',
         level=logging.DEBUG)
     show_banner()
 
@@ -251,10 +252,11 @@ if __name__ == '__main__':
             else:
                 payload[raw_post.split('=')[0]] = raw_post.split('=')[1]
 
-            logging.info('POST or PUT data: ' + payload)
+            logging.info('POST or PUT data: ' + str(payload))
 
-        except BaseException:
+        except BaseException as payload_error:
             payload = 'LEL!'
+            logging.error(payload_error)
             logging.error(
                 'POST or PUT data could not be understood! Default data configurated as: "' +
                 payload +
