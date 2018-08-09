@@ -14,8 +14,9 @@ $ python3 pyddoz.py
 ```
 
 ## Usage
-PyDDoZ provides an interactive shell for users. *Argument parsing is in TODO list.*
+PyDDoZ provides an interactive shell for users.
 
+- URLs have to given with http:// or https://. **Do not give only domain name!**
 - You can enter multiple URLs with a blank space. It will request randomly one of them for every request. <br>
 Example: https://google.com https://twitter.com https://yahoo.com
 
@@ -27,6 +28,35 @@ After selecting POST or PUT, you can randomize the data for every request! <br>
 For instance, `username=admin&query=hello` will be sent as `username=[RANDOMSTR]&query=[RANDOMSTR]` <br>
 
 **RANDOMSTR** could be any random string that was generated at backstage. You can determine maximum length of the random generated string.
+
+### Argument Parsing
+If you like to use in argument mode rather than interactive mode, take a look at the parameters.
+
+`$ python3 pyddoz.py -h`
+
+```
+usage: pyddoz.py [-h] -u U [-m {g,p,u,h,o,d}] [-d D] [-r {y,n}] [-mr MR]
+                 [-b {y,n}] [-ob {y,n}] [-t T] [-th TH] [-s S] [-re RE]
+                 [-p {y,n}] [-rd {y,n}]
+
+PyDDoZ Argument Parser v1.0.0
+
+optional arguments:
+  -h, --help        show this help message and exit
+  -u U              URL
+  -m {g,p,u,h,o,d}  GET, POST, PUT, HEAD, OPTIONS, DELETE? [G/P/U/H/O/D]
+  -d D              Post or Put Data
+  -r {y,n}          Randomize Data
+  -mr MR            Max Random Character
+  -b {y,n}          Activate Bots
+  -ob {y,n}         Only Bots
+  -t T              Timeout
+  -th TH            Threads
+  -s S              Sleep Time Between Threads
+  -re RE            Retries
+  -p {y,n}          Proxy
+  -rd {y,n}         Redirection
+```
 
 ### Features
 - Activation of bots: In addition to standard requests, they will also hit and crawl the target URL.
