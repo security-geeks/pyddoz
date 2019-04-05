@@ -8,7 +8,7 @@ PyDDoZ is a powerful, human-friendly DDoS tool using application layer (L7) atta
 
 ## Installation
 ```
-$ git clone https://github.com/n1rv4n4/pyddoz.git
+$ git clone https://github.com/0x01h/pyddoz.git
 $ cd pyddoz
 $ python3 pyddoz.py
 ```
