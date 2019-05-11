@@ -203,7 +203,7 @@ def arg_parsing():
             'y',
             'n'])
     parser.add_argument('-t', help='Timeout', default=30, type=int)
-    parser.add_argument('-th', help='Threads', default=512, type=int)
+    parser.add_argument('-th', help='Threads', default=128, type=int)
     parser.add_argument(
         '-s',
         help='Sleep Time Between Threads',
@@ -225,7 +225,6 @@ def arg_parsing():
 
 if __name__ == '__main__':
     urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
-    resource.setrlimit(resource.RLIMIT_NOFILE, (999999, 999999))
     logging.basicConfig(
         filename='pyddoz.log',
         format='%(asctime)s | %(levelname)s | %(message)s',
@@ -517,8 +516,8 @@ if __name__ == '__main__':
                     'Enter timeout second for requests: '))
 
             if (not isinstance(selected_to, float)
-                    or not (0 <= selected_to <= 30)):
-                print(Fore.RED + 'Enter valid second(s) between 0 and 30!')
+                    or not (3 <= selected_to <= 30)):
+                print(Fore.RED + 'Enter valid second(s) between 3 and 30!')
                 continue
 
             else:
@@ -564,8 +563,8 @@ if __name__ == '__main__':
                     'Enter seconds of sleeping between threads: '))
 
             if (not isinstance(sleep_time, float)
-                    or not (0 <= sleep_time <= 600)):
-                print(Fore.RED + 'Enter valid seconds between 0 and 600!')
+                    or not (0 <= sleep_time <= 300)):
+                print(Fore.RED + 'Enter valid seconds between 0 and 300!')
                 continue
 
             else:
@@ -591,10 +590,10 @@ if __name__ == '__main__':
                     'Enter number of retries after a connection failure: '))
 
             if (not isinstance(num_retries, int)
-                    or not (0 <= num_retries <= 128)):
+                    or not (0 <= num_retries <= 32)):
                 print(
                     Fore.RED +
-                    'Enter valid number of retries between 0 and 128!')
+                    'Enter valid number of retries between 0 and 32!')
                 continue
 
             else:
