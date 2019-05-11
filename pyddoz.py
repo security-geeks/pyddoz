@@ -62,14 +62,7 @@ def send_request():
         if (activate_bots == 'y'):
             bot_header = header
             bot_header['Content-Type'] = 'application/x-www-form-urlencoded'
-            choice = random.randint(0, 1)
-            bot_url = bot_urls[choice]
-            logging.info('Selected bot URL: ' + bot_url)
-
-            if (choice == 0):
-                payload = {'page_url': url}
-            elif (choice == 1):
-                payload = {'url': url}
+            payload = 'url=' + url + '&submit=Submit&type=GET&http=1.1&uak=0'
 
             try:
                 response = request.post(
@@ -82,6 +75,7 @@ def send_request():
                 logging.info('Response code from bot: ' +
                              str(response.status_code))
                 global num_bot_requests
+                num_success += 1 if response.status_code == 200 else 0
                 num_bot_requests += 1
 
             except Exception as exception:
@@ -92,9 +86,12 @@ def send_request():
                 return
 
         if (randomize_data == 'y'):
-            for data in payload:
-                payload.update({data: ''.join(random.sample(
-                    (string.ascii_letters + string.digits), random.randint(5, max_random)))})
+            try:
+                for data in payload:
+                    payload.update({data: ''.join(random.sample(
+                        (string.ascii_letters + string.digits), random.randint(5, max_random)))})
+            except:
+                payload = ''.join(random.sample((string.ascii_letters + string.digits), random.randint(5, max_random)))
             logging.info('Randomized data: ' + str(payload))
 
         adapter = requests.adapters.HTTPAdapter(max_retries=num_retries)
@@ -251,9 +248,7 @@ if __name__ == '__main__':
     num_failed = 0
     num_success = 0
     num_bot_requests = 0
-    bot_urls = []
-    bot_urls.append('https://www.giftofspeed.com/request-checker/')
-    bot_urls.append('https://gtmetrix.com/analyze.html')
+    bot_url = 'https://websniffer.cc/'
     urls = []
     randomize_data = 'n'
     interactive_mode = False
