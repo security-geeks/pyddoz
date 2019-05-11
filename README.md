@@ -1,6 +1,6 @@
 [![Made with Python](http://ForTheBadge.com/images/badges/made-with-python.svg)](https://www.python.org/) [![Winter is coming!](http://ForTheBadge.com/images/badges/winter-is-coming.svg)](https://github.com/n1rv4n4/pyddoz/)
 
-# PyDDoZ [![PyDDoZ](https://img.shields.io/badge/PyDDoZ-1.0.1%20beta-red.svg)](https://github.com/n1rv4n4/pyddoz/) [![GPLv3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0.en.html)
+# PyDDoZ [![PyDDoZ](https://img.shields.io/badge/PyDDoZ-1.0.2-red.svg)](https://github.com/n1rv4n4/pyddoz/) [![GPLv3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0.en.html)
 PyDDoZ is a powerful, human-friendly DDoS tool using application layer (L7) attack techniques. It has nice logging, proxifying, automated bots requests, randomizing data, multiple HTTP request methods, and many other features! Apply load/stress tests to your web application in various ways easily. Written in Python.
 
 ## Prerequisites
@@ -59,9 +59,9 @@ optional arguments:
 ```
 
 ### Features
-- Activation of bots: In addition to standard requests, they will also hit and crawl the target URL.
-- Timeout: Maximum waiting time request to be responded. *Recommended value is higher than 5.*
-- Threads: Number of threads to involve the attack. *Large number of threads could lead connection and system errors!*
+- Activation of bots: In addition to standard requests, they will also hit and crawl the target URL. (**This feature is experimental and not powerful for now, feel free to send PR to improve and add new bots.**)
+- Timeout: Maximum waiting time request to be responded. (Recommended value is higher than 5.)
+- Threads: Number of threads to involve the attack. (Large number of threads could lead connection and system errors!)
 - Sleeping time between threads (seconds): 0 to non-wait, or you can give floating number such as 0.25, 0.5, or 0.87 etc.
 - Retries after failure: You can force requests to retry again.
 - Proxy: After selecting this option, fresh and live proxies will be fetched and used randomly! No need to enter proxies manually.
